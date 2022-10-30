@@ -43,34 +43,10 @@ public class LabsSeenMgr {
       System.out.println("Adding lab " + labId + " to " + Config.DATA_FILE + "...");
 
       List<String> seenLabIDs = getSeenLabIDs();
-
       seenLabIDs.add(labId);
+      writeToFile(seenLabIDs);
 
-      // Avoid appending to existing file
-      if (labsSeen.exists()) {
-         labsSeen.delete();
-      }
-
-      try {
-
-         PrintWriter outFile = new PrintWriter(labsSeen);
-
-         // Write each lab ID to file
-         for (String seenLabId : seenLabIDs) {
-            outFile.println(seenLabId);
-         }
-
-         // Close up our writer (good practice)
-         outFile.close();
-
-         System.out.println("Lab " + labId + " added to " + Config.DATA_FILE + "!");
-
-      } catch (FileNotFoundException e) {
-
-         System.err.println("FileNotFoundException while trying to add seen lab ID");
-         e.printStackTrace();
-
-      }
+      System.out.println("Lab " + labId + " added to " + Config.DATA_FILE + "!");
 
    }
 
@@ -80,8 +56,14 @@ public class LabsSeenMgr {
       System.out.println("Removing lab " + labId + " from " + Config.DATA_FILE);
 
       List<String> seenLabIDs = getSeenLabIDs();
-
       seenLabIDs.remove(labId);
+      writeToFile(seenLabIDs);
+
+      System.out.println("Lab " + labId + " removed from " + Config.DATA_FILE + "!");
+
+   }
+
+   private void writeToFile(List<String> seenLabIDs) {
 
       // Avoid appending to existing file
       if (labsSeen.exists()) {
@@ -100,11 +82,9 @@ public class LabsSeenMgr {
          // Close up our writer (good practice)
          outFile.close();
 
-         System.out.println("Lab " + labId + " removed from " + Config.DATA_FILE + "!");
-
       } catch (FileNotFoundException e) {
 
-         System.err.println("FileNotFoundException while trying to remove seen lab ID");
+         System.err.println("FileNotFoundException while trying to write to labs seen file.");
          e.printStackTrace();
 
       }
