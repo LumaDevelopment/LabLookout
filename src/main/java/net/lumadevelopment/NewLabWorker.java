@@ -54,11 +54,9 @@ public class NewLabWorker {
       we read as the lab ID is the <a href> value. So, just append
       the lab ID to the configured labs URL and add a slash.
        */
-      String newLabUrl = Config.LABS_URL + id + "/";
 
       // Nothing fancy, but it works.
-      String message = "**New Lab Released!**\n"
-            + newLabUrl + "\n\n"
+      String message = "**HW" + id + " released!**\n"
             + role.getMentionTag();
 
       // And the bot has done its one job!
